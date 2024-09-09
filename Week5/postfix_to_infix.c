@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 void removenewline(char str[]) {
     for (int i=0; str[i] != '\0'; i++)
@@ -26,10 +25,10 @@ void copy(char* str1, char* str2) {
 }
 
 int convert(char* exp, char* infix) {
-    int result, top = -1;
+    int top = -1;
     char opd[200][300], opd1[300], opd2[300];
     for (int i = 0; exp[i] != '\0'; i++) {
-        if (exp[i] >= '0' && exp[i] <= '9') { // || (exp[i] >= 'a' && exp[i] <= 'z') || (exp[i] >= 'A' && exp[i] <= 'A')) {
+        if ((exp[i] >= '0' && exp[i] <= '9') || (exp[i] >= 'a' && exp[i] <= 'z') || (exp[i] >= 'A' && exp[i] <= 'A')) {
             opd[++top][0] = exp[i];
             opd[top][1] = '\0';
             continue;
@@ -72,12 +71,12 @@ int convert(char* exp, char* infix) {
 int main() {
     printf("Enter the expression: ");
     char exp[200], infix[300];
-    int result;
+    int error;
     fgets(exp, 200, stdin);
     removenewline(exp);
-    result = convert(exp, infix);
-    if (result == 1)
+    error = convert(exp, infix);
+    if (error == 1)
         return 1;
-    printf("The infix expression is:\n%s", infix);
+    printf("The infix expression is: %s", infix);
     return 0;
 }

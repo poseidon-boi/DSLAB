@@ -10,47 +10,49 @@ void removenewline(char str[]) {
 }
 
 int input_prec(char symbol) {
-    switch(symbol)
-    {
+    switch(symbol) {
         case '+':
-        case '-': return 1; break;
+        case '-': return 1;
         case '*':
-        case '/': return 3; break;
-        case '^': return 6; break;
-        case '(': return 9; break;
-        case ')': return 0; break;
+        case '/': return 3;
+        case '^': return 6;
+        case '(': return 9;
+        case ')': return 0;
         default: return 7;
     }
 }
 
 int stack_prec(char symbol) {
-    switch(symbol)
-    {
+    switch(symbol) {
         case '+':
-        case '-': return 2; break;
+        case '-': return 2;
         case '*':
-        case '/': return 4; break;
-        case '^': return 5; break;
-        case '(': return 0; break;
-        case '#': return -1; break;
+        case '/': return 4;
+        case '^': return 5;
+        case '(': return 0;
+        case '#': return -1;
         default: return 8;
     }
 }
 
 int convert(char* infix, char* postfix) {
-    char* stk = malloc(sizeof(infix));
+    char stk[300];
     int top = -1, j = 0;
     stk[++top] = '#';
     for (int i = 0; infix[i] != '\0'; i++) {
         char symbol = infix[i];
         while (stack_prec(stk[top]) > input_prec(symbol))
             postfix[j++] = stk[top--];
-        if (stack_prec(stk[top])!=input_prec(symbol))
+        if (stack_prec(stk[top]) != input_prec(symbol))
             stk[++top] = symbol;
         else
             top--;
     }
     postfix[j] = '\0';
+    if (stk[top] != '#') {
+        printf("Invalid expression");
+        return 1;
+    }
     return 0;
 }
 
@@ -63,6 +65,6 @@ int main() {
     error = convert(infix, postfix);
     if (error)
         return 1;
-    printf("The postfix expression is:\n%s", postfix);
+    printf("The postfix expression is: %s", postfix);
     return 0;
 }

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #define ERROR -973845
 
 void removenewline(char str[]) {
@@ -12,7 +11,7 @@ void removenewline(char str[]) {
 }
 
 int eval(char* exp) {
-    int result, opd[150], top = -1;
+    int opd[150], top = -1;
     for (int i = 0; exp[i] != '\0'; i++) {
         if (exp[i] >= '0' && exp[i] <= '9') {
             opd[++top] = exp[i]-'0';
@@ -54,7 +53,8 @@ int eval(char* exp) {
 
 int main() {
     printf("Enter the expression: ");
-    char *exp, result;
+    char exp[200];
+    int result;
     fgets(exp, 200, stdin);
     removenewline(exp);
     result = eval(exp);
