@@ -29,7 +29,7 @@ int convert(char* exp, char* infix) {
     char opd[200][300], opd1[300], opd2[300];
     for (len = 0; exp[len] != '\0'; len++);
     for (int i = len-1; i >= 0; i--) {
-        if (exp[i] >= '0' && exp[i] <= '9') { // || (exp[i] >= 'a' && exp[i] <= 'z') || (exp[i] >= 'A' && exp[i] <= 'A')) {
+        if ((exp[i] >= '0' && exp[i] <= '9') || (exp[i] >= 'a' && exp[i] <= 'z') || (exp[i] >= 'A' && exp[i] <= 'A')) {
             opd[++top][0] = exp[i];
             opd[top][1] = '\0';
             continue;
