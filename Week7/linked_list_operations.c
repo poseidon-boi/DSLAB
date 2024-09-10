@@ -9,36 +9,33 @@ typedef struct node {
 node* head = NULL;
 
 int list_len() {
-    if (head == NULL)
+    if (!head)
         return 0;
-    if (head -> next == NULL)
+    if (!(head -> next))
         return 1;
     int len;
     node* cur = head;
-    for (len = 0; cur != NULL; len++)
-        cur = cur -> next;
+    for (len = 0; cur; len++, cur = cur -> next);
     return len;
 }
 
 int insert_before(int ele, int data) {
-    if (head == NULL)
+    if (!head)
         return 1;
     if (head -> data == ele) {
-        node* insert;
+        node* insert = malloc(sizeof(*insert));
         insert -> data = data;
         insert -> next = head;
         head = insert;
         return 0;
     }
     node* cur = head;
-    while (cur != NULL) {
+    for (; cur -> next; cur = cur -> next)
         if (cur -> next -> data == ele)
             break;
-        cur = cur -> next;
-    }
-    if (cur == NULL)
+    if (!cur -> next)
         return 1;
-    node *insert;
+    node *insert = malloc(sizeof(*insert));
     insert -> data = data;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -46,17 +43,15 @@ int insert_before(int ele, int data) {
 }
 
 int insert_after(int ele, int data) {
-    if (head == NULL)
+    if (!head)
         return 1;
     node* cur = head;
-    while (cur != NULL) {
+    for (; cur; cur = cur -> next)
         if (cur -> data == ele)
             break;
-        cur = cur -> next;
-    }
-    if (cur == NULL)
+    if (!cur)
         return 1;
-    node *insert;
+    node *insert = malloc(sizeof(*insert));
     insert -> data = data;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -64,31 +59,31 @@ int insert_after(int ele, int data) {
 }
 
 int delete(int ele) {
-    if (head == NULL)
+    if (!head)
         return 1;
     if (head -> data == ele) {
         head = head -> next;
         return 0;
     }
     node* cur = head;
-    while (cur -> next -> data != ele && cur != NULL)
-        cur = cur -> next;
-    if (cur == NULL)
+    for (; cur -> next; cur = cur -> next)
+        if (cur -> next -> data == ele || !cur)
+            break;
+    if (!cur -> next)
         return 1;
+    node* deleted = cur -> next;
     cur -> next = cur -> next -> next;
+    free(deleted);
     return 0;
 }
 
 void traverse() {
-    if (head == NULL) {
+    if (!head) {
         printf("NULL\n");
         return;
     }
-    node* cur = head;
-    while (cur != NULL) {
+    for (node* cur = head; cur; cur = cur -> next)
         printf("%d ", cur -> data);
-        cur = cur -> next;
-    }
     printf("\n");
 }
 
@@ -99,7 +94,7 @@ void reverse() {
     node* cur = head;
     for (int i = 0; i <= len/2; i++) {
         node* prev = head;
-        for (int j = 0; j <= len-i-1; j++)
+        for (int j = 0; j < len-i-1; j++)
             prev = prev -> next;
         int temp = cur -> data;
         cur -> data = prev -> data;
@@ -112,47 +107,45 @@ void sort() {
     int len = list_len();
     if (len < 2)
         return;
-    node* cur = head;
     for (int i = 0; i < len-1; i++) {
-        node* cur2 = cur;
-        for (int j = i; j < len; j++) {
-            if (cur2 -> data <= cur2 -> next -> data)
+        node* cur = head;
+        for (int j = 0; j < len - i - 1; j++, cur = cur -> next) {
+            if (cur -> data <= cur -> next -> data)
                 continue;
             int temp = cur -> data;
             cur -> data = cur -> next -> data;
             cur -> next -> data = temp;
         }
-        cur = cur -> next;
     }
 }
 
 void delete_alternate() {
-    if (head == NULL)
+    if (!head)
         return;
-    node* cur = head;
-    while (cur != NULL && cur -> next != NULL) {
+    for (node* cur = head; cur && cur -> next; cur = cur -> next) {
+        node* deleted = cur -> next;
         cur -> next = cur -> next -> next;
-        cur = cur -> next;
+        free(deleted);
     }
 }
 
 void insert_sort(int ele) {
-    if (head == NULL) {
+    if (!head) {
         head = malloc(sizeof(*head));
         head -> next = NULL;
         head -> data = ele;
         return;
     }
-    node* insert;
+    node* insert = malloc(sizeof(*insert));
     insert -> data = ele;
     node* cur = head;
-    while (cur -> next != NULL)
+    for (; cur -> next; cur = cur -> next)
         if (cur -> data > ele) {
-            insert_before(ele, cur -> data);
+            insert_before(cur -> data, ele);
             return;
         }
     if (cur -> data > ele) {
-        insert_before(ele, cur -> data);
+        insert_before(cur -> data, ele);
         return;
     }
     cur -> next = insert;
@@ -199,5 +192,4 @@ int main() {
         printf("Enter choice: ");
         scanf("%d", &ch);
     }
-    return 0;
 }
