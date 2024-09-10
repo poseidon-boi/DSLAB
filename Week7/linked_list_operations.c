@@ -3,10 +3,22 @@
 
 typedef struct node {
     int data;
-    node* next;
+    struct node* next;
 } node;
 
 node* head = NULL;
+
+int list_len() {
+    if (head == NULL)
+        return 0;
+    if (head -> next == NULL)
+        return 1;
+    int len;
+    node* cur = head;
+    for (len = 0; cur != NULL; len++)
+        cur = cur -> next;
+    return len;
+}
 
 int insert_before(int ele, int data) {
     if (head == NULL)
@@ -19,8 +31,11 @@ int insert_before(int ele, int data) {
         return 0;
     }
     node* cur = head;
-    while (cur -> next -> data != ele && cur != NULL)
+    while (cur != NULL) {
+        if (cur -> next -> data == ele)
+            break;
         cur = cur -> next;
+    }
     if (cur == NULL)
         return 1;
     node *insert;
@@ -34,8 +49,11 @@ int insert_after(int ele, int data) {
     if (head == NULL)
         return 1;
     node* cur = head;
-    while (cur -> data != ele && cur != NULL)
+    while (cur != NULL) {
+        if (cur -> data == ele)
+            break;
         cur = cur -> next;
+    }
     if (cur == NULL)
         return 1;
     node *insert;
@@ -67,12 +85,119 @@ void traverse() {
         return;
     }
     node* cur = head;
-    while (cur -> next != NULL) {
+    while (cur != NULL) {
         printf("%d ", cur -> data);
+        cur = cur -> next;
+    }
+    printf("\n");
+}
+
+void reverse() {
+    int len = list_len();
+    if (len < 2)
+        return;
+    node* cur = head;
+    for (int i = 0; i <= len/2; i++) {
+        node* prev = head;
+        for (int j = 0; j <= len-i-1; j++)
+            prev = prev -> next;
+        int temp = cur -> data;
+        cur -> data = prev -> data;
+        prev -> data = temp;
         cur = cur -> next;
     }
 }
 
-void reverse() {
+void sort() {
+    int len = list_len();
+    if (len < 2)
+        return;
+    node* cur = head;
+    for (int i = 0; i < len-1; i++) {
+        node* cur2 = cur;
+        for (int j = i; j < len; j++) {
+            if (cur2 -> data <= cur2 -> next -> data)
+                continue;
+            int temp = cur -> data;
+            cur -> data = cur -> next -> data;
+            cur -> next -> data = temp;
+        }
+        cur = cur -> next;
+    }
+}
 
+void delete_alternate() {
+    if (head == NULL)
+        return;
+    node* cur = head;
+    while (cur != NULL && cur -> next != NULL) {
+        cur -> next = cur -> next -> next;
+        cur = cur -> next;
+    }
+}
+
+void insert_sort(int ele) {
+    if (head == NULL) {
+        head = malloc(sizeof(*head));
+        head -> next = NULL;
+        head -> data = ele;
+        return;
+    }
+    node* insert;
+    insert -> data = ele;
+    node* cur = head;
+    while (cur -> next != NULL)
+        if (cur -> data > ele) {
+            insert_before(ele, cur -> data);
+            return;
+        }
+    if (cur -> data > ele) {
+        insert_before(ele, cur -> data);
+        return;
+    }
+    cur -> next = insert;
+    insert -> next = NULL;
+}
+
+int main() {
+    printf("1. Insert before element\n2. Insert after element\n3. Delete\n4. Traverse\n");
+    printf("5. Reverse\n6. Sort\n7. Delete alternate\n8. Insert in sorted\n9. Exit\nEnter choice: ");
+    int ch;
+    scanf("%d", &ch);
+    while (1) {
+        int ele, ins, error = 0;
+        switch(ch) {
+            case 1:
+                printf("Enter existing and insert element: ");
+                scanf("%d %d", &ele, &ins);
+                error = insert_before(ele, ins);
+                break;
+            case 2:
+                printf("Enter existing and insert element: ");
+                scanf("%d %d", &ele, &ins);
+                error = insert_after(ele, ins);
+                break;
+            case 3:
+                printf("Enter element to delete: ");
+                scanf("%d", &ele);
+                error = delete(ele);
+                break;
+            case 4: traverse(); break;
+            case 5: reverse(); break;
+            case 6: sort(); break;
+            case 7: delete_alternate(); break;
+            case 8: printf("Enter element to insert: ");
+                scanf("%d", &ins);
+                insert_sort(ins);
+                break;
+            case 9:
+                return 0;
+            default: printf("Invalid choice\n");
+        }
+        if (error)
+            printf("Operation failed\n");
+        printf("Enter choice: ");
+        scanf("%d", &ch);
+    }
+    return 0;
 }
