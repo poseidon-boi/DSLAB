@@ -101,24 +101,19 @@ void traverse() {
 
 /** Reverses the list */
 void reverse() {
-    if (len < 2)
-        return;
     node* cur = head;
-    for (int i = 0; i < len/2; i++) {
+    for (int i = 0; i < len/2; i++, cur = cur -> next) {
         node* prev = head;
         for (int j = 0; j < len-i-1; j++)
             prev = prev -> next;
         int temp = cur -> data;
         cur -> data = prev -> data;
         prev -> data = temp;
-        cur = cur -> next;
     }
 }
 
 /** Sorts the list */
 void sort() {
-    if (len < 2)
-        return;
     for (int i = 0; i < len-1; i++) {
         node* cur = head;
         for (int j = 0; j < len - i - 1; j++, cur = cur -> next) {
@@ -133,8 +128,6 @@ void sort() {
 
 /** Deletes alternate nodes in the list */
 void delete_alternate() {
-    if (!head)
-        return;
     for (node* cur = head; cur && cur -> next; cur = cur -> next) {
         node* deleted = cur -> next;
         cur -> next = cur -> next -> next;
@@ -143,7 +136,7 @@ void delete_alternate() {
     }
 }
 
-/** Inserts an element in sorted order, does not sort the list, works as intended only if list is already sorted */
+/** Inserts an element in sorted order, works as intended only if list is already sorted */
 void insert_sort(int ele) {
     if (!head) {
         head = malloc(sizeof(*head));
@@ -170,8 +163,10 @@ void insert_sort(int ele) {
 }
 
 int main() {
-    printf("1. Insert before element\n2. Insert after element\n3. Delete\n4. Traverse\n");
-    printf("5. Reverse\n6. Sort\n7. Delete alternate\n8. Insert in sorted\n9. Exit\nEnter choice: ");
+    printf("1. Insert before element\n2. Insert after element\n"
+           "3. Delete\n4. Traverse\n5. Reverse\n6. Sort\n"
+           "7. Delete alternate\n8. Insert in sorted\n"
+           "9. Exit\nEnter choice: ");
     int ch;
     scanf("%d", &ch);
     while (1) {
