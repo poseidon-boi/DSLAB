@@ -1,24 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/** Node of the singly linked list
+ * @param data
+ * @param next
+ */
 typedef struct node {
+    /** The data stored in the node */
     int data;
+    /** The pointer to the next node */
     struct node* next;
 } node;
 
-node* head = NULL;
+/** The head node */
+static node* head;
+/** The length of the linked list */
+static int len;
 
-int list_len() {
-    if (!head)
-        return 0;
-    if (!(head -> next))
-        return 1;
-    int len;
-    node* cur = head;
-    for (len = 0; cur; len++, cur = cur -> next);
-    return len;
-}
-
+/** Inserts data before ele
+ * @return Returns 0 if successfully inserted, 1 if failed
+ */
 int insert_before(int ele, int data) {
     if (!head)
         return 1;
@@ -27,6 +28,7 @@ int insert_before(int ele, int data) {
         insert -> data = data;
         insert -> next = head;
         head = insert;
+        len++;
         return 0;
     }
     node* cur = head;
@@ -39,9 +41,13 @@ int insert_before(int ele, int data) {
     insert -> data = data;
     insert -> next = cur -> next;
     cur -> next = insert;
+    len++;
     return 0;
 }
 
+/** Inserts data after ele
+ * @return Returns 0 if successfully inserted, 1 if failed
+ */
 int insert_after(int ele, int data) {
     if (!head)
         return 1;
@@ -55,9 +61,13 @@ int insert_after(int ele, int data) {
     insert -> data = data;
     insert -> next = cur -> next;
     cur -> next = insert;
+    len++;
     return 0;
 }
 
+/** Deletes ele from the linked list, if it exists
+ * @return Returns 0 if successfully deleted, 1 if failed
+ */
 int delete(int ele) {
     if (!head)
         return 1;
@@ -74,9 +84,11 @@ int delete(int ele) {
     node* deleted = cur -> next;
     cur -> next = cur -> next -> next;
     free(deleted);
+    len--;
     return 0;
 }
 
+/** Transverses through the linked list and prints elements, prints NULL if empty */
 void traverse() {
     if (!head) {
         printf("NULL\n");
@@ -87,12 +99,12 @@ void traverse() {
     printf("\n");
 }
 
+/** Reverses the list */
 void reverse() {
-    int len = list_len();
     if (len < 2)
         return;
     node* cur = head;
-    for (int i = 0; i <= len/2; i++) {
+    for (int i = 0; i < len/2; i++) {
         node* prev = head;
         for (int j = 0; j < len-i-1; j++)
             prev = prev -> next;
@@ -103,8 +115,8 @@ void reverse() {
     }
 }
 
+/** Sorts the list */
 void sort() {
-    int len = list_len();
     if (len < 2)
         return;
     for (int i = 0; i < len-1; i++) {
@@ -119,6 +131,7 @@ void sort() {
     }
 }
 
+/** Deletes alternate nodes in the list */
 void delete_alternate() {
     if (!head)
         return;
@@ -126,14 +139,17 @@ void delete_alternate() {
         node* deleted = cur -> next;
         cur -> next = cur -> next -> next;
         free(deleted);
+        len--;
     }
 }
 
+/** Inserts an element in sorted order, does not sort the list, works as intended only if list is already sorted */
 void insert_sort(int ele) {
     if (!head) {
         head = malloc(sizeof(*head));
         head -> next = NULL;
         head -> data = ele;
+        len++;
         return;
     }
     node* insert = malloc(sizeof(*insert));
@@ -150,6 +166,7 @@ void insert_sort(int ele) {
     }
     cur -> next = insert;
     insert -> next = NULL;
+    len++;
 }
 
 int main() {
