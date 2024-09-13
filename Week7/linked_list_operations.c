@@ -112,7 +112,7 @@ void reverse() {
     }
 }
 
-/** Sorts the list */
+/** Sorts the list in ascending order */
 void sort() {
     for (int i = 0; i < len-1; i++) {
         node* cur = head;
@@ -136,7 +136,7 @@ void delete_alternate() {
     }
 }
 
-/** Inserts an element in sorted order, works as intended only if list is already sorted */
+/** Inserts an element in sorted order, works as intended only if list is already sorted in ascending order */
 void insert_sort(int ele) {
     if (!head) {
         head = malloc(sizeof(*head));
