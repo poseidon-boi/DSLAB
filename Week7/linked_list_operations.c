@@ -17,15 +17,17 @@ static node* head;
 /** The length of the linked list */
 static int len;
 
-/** Inserts data before ele
+/** Inserts ins before ele
+ * @param ele The existing element
+ * @param ins The element to insert
  * @return Returns 0 if successfully inserted, 1 if failed
  */
-int insert_before(int ele, int data) {
+int insert_before(int ele, int ins) {
     if (!head)
         return 1;
     if (head -> data == ele) {
         node* insert = malloc(sizeof(*insert));
-        insert -> data = data;
+        insert -> data = ins;
         insert -> next = head;
         head = insert;
         len++;
@@ -38,17 +40,19 @@ int insert_before(int ele, int data) {
     if (!cur -> next)
         return 1;
     node *insert = malloc(sizeof(*insert));
-    insert -> data = data;
+    insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
     len++;
     return 0;
 }
 
-/** Inserts data after ele
+/** Inserts ins after ele
+ * @param ele The existing element
+ * @param ins The element to insert
  * @return Returns 0 if successfully inserted, 1 if failed
  */
-int insert_after(int ele, int data) {
+int insert_after(int ele, int ins) {
     if (!head)
         return 1;
     node* cur = head;
@@ -58,7 +62,7 @@ int insert_after(int ele, int data) {
     if (!cur)
         return 1;
     node *insert = malloc(sizeof(*insert));
-    insert -> data = data;
+    insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
     len++;
