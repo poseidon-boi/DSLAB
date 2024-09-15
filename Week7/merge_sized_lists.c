@@ -26,7 +26,7 @@ void traverse(node* head) {
 }
 
 /** Finds the length of the linked list
- * @param head The head of the linked list
+ * @param head The head node of the linked list
  * @return The length of the linked list
  */
 int length(node* head) {
