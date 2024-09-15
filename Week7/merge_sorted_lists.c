@@ -1,12 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/** Node of the singly linked list
+ * @param data
+ * @param next
+ */
 typedef struct node {
+    /** The data stored in the node */
     int data;
+    /** The pointer to the next node */
     struct node* next;
 } node;
 
-/** Traverses the list */
+/** Traverses the list
+ * @param head The head node of the linked list
+ */
 void traverse(node* head) {
     if (!head) {
         printf("NULL\n");
@@ -42,7 +50,8 @@ node* insert_before(node* head, int ele, int ins) {
     return head;
 }
 
-/** Inserts an element in sorted order, works as intended only if list is already sorted in ascending order
+/** Inserts an element in sorted order, works as intended
+ *  only if list is already sorted in ascending order
  * @param head The head node of the linked list
  * @param ele The element to be inserted
  * @return Returns the updated head node of the linked list
@@ -71,10 +80,12 @@ node* insert_sort(node* head, int ele) {
     return head;
 }
 
-/** Merges two linked lists that are sorted in ascending order. Empties the second list.
+/** Merges two linked lists that are sorted in ascending order.
+ *  Empties the second list.
  * @param head1 The head node of the first linked list
  * @param head2 The head node of the second linked list
- * @return Returns the head node of the resulting linked list. Returns NULL if both linked lists are empty.
+ * @return Returns the head node of the resulting linked list.
+ *         Returns NULL if both linked lists are empty.
  */
 node* merge(node* head1, node* head2) {
     if (!head1)
