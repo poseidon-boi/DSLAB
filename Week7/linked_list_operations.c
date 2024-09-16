@@ -140,7 +140,9 @@ void delete_alternate() {
     }
 }
 
-/** Inserts an element in sorted order, works as intended only if list is already sorted in ascending order */
+/** Inserts an element in sorted order, works as intended only if list is already sorted in ascending order
+ * @param ele The element to insert
+ */
 void insert_sort(int ele) {
     if (!head) {
         head = malloc(sizeof(*head));
@@ -195,12 +197,12 @@ int main() {
             case 5: reverse(); break;
             case 6: sort(); break;
             case 7: delete_alternate(); break;
-            case 8: printf("Enter element to insert: ");
+            case 8:
+                printf("Enter element to insert: ");
                 scanf("%d", &ins);
                 insert_sort(ins);
                 break;
-            case 9:
-                return 0;
+            case 9: return 0;
             default: printf("Invalid choice\n");
         }
         if (error)

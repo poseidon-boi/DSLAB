@@ -13,21 +13,25 @@ typedef struct node {
 } node;
 
 /** Inserts a node to the start of the linked list, like a push operation
- * @param head The head node of the linked list
+ * @param list Pointer to pointer to head node
+ * @param head The current node of the linked list
  * @param ele The element to insert
- * @return Returns the updated head node of the linked list
  */
-node* insert_start(node* head, int ele) {
-    if (!head) {
-        head = malloc(sizeof(*head));
-        head -> next = NULL;
-        head -> data = ele;
-        return head;
+void insert_tail(node** list, node* cur, int ele) {
+    if (!cur) {
+        cur = malloc(sizeof(*cur));
+        cur -> next = NULL;
+        cur -> data = ele;
+        *list = cur;
+        return;
     }
-    node* insert = malloc(sizeof(*insert));
-    insert -> data = ele;
-    insert -> next = head;
-    return insert;
+    if (!cur -> next) {
+        node* insert = malloc(sizeof(*insert));
+        insert -> data = ele;
+        cur -> next = insert;
+        return;
+    }
+    insert_tail(list, cur -> next, ele);
 }
 
 /** Traverses the list
@@ -46,17 +50,17 @@ int main() {
     printf("1. Insert into list\n2. Traverse list\n3. Exit\nEnter choice: ");
     int ch;
     scanf("%d", &ch);
-    node* head = NULL;
+    node** head = malloc(sizeof(*head));
     while (1) {
         int ele;
         switch(ch) {
             case 1:
                 printf("Enter element to insert: ");
                 scanf("%d", &ele);
-                head = insert_start(head, ele);
+                insert_tail(head, *head, ele);
                 break;
             case 2:
-                traverse(head); break;
+                traverse(*head); break;
             case 3: return 0;
             default: printf("Invalid choice\n");
         }
