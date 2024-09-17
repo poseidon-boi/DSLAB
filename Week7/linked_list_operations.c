@@ -39,7 +39,7 @@ int insert_before(int ele, int ins) {
             break;
     if (!cur -> next)
         return 1;
-    node *insert = malloc(sizeof(*insert));
+    node* insert = malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -61,7 +61,7 @@ int insert_after(int ele, int ins) {
             break;
     if (!cur)
         return 1;
-    node *insert = malloc(sizeof(*insert));
+    node* insert = malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -76,12 +76,14 @@ int delete(int ele) {
     if (!head)
         return 1;
     if (head -> data == ele) {
+        node* deleted = head;
         head = head -> next;
+        free(deleted);
         return 0;
     }
     node* cur = head;
     for (; cur -> next; cur = cur -> next)
-        if (cur -> next -> data == ele || !cur)
+        if (cur -> next -> data == ele)
             break;
     if (!cur -> next)
         return 1;
