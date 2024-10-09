@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define HEAD 0
+#define TAIL 1
 
 /** Node of the doubly linked list
  * @param data
@@ -36,14 +38,14 @@ void insert_tail(node** list, int ele) {
     node* insert = malloc(sizeof(*insert));
     insert -> data = ele;
     insert -> next = NULL;
-    if(!list[0]) {
+    if(!list[HEAD]) {
         insert -> prev = NULL;
-        list[0] = list[1] = insert;
+        list[HEAD] = list[TAIL] = insert;
         return;
     }
-    list[1] -> next = insert;
+    list[TAIL] -> next = insert;
     insert -> prev = list[1];
-    list[1] = insert;
+    list[TAIL] = insert;
 }
 
 /** Concatenates list2 to list1
@@ -51,20 +53,18 @@ void insert_tail(node** list, int ele) {
  * @param list2 Pointer array containing head and tail of list 2
  */
 void concatenate(node** list1, node** list2) {
-    if (!list1[0] && !list2[0])
+    if (!list2[HEAD])
         return;
-    if (!list2[0])
-        return;
-    if (!list1[0]) {
-        list1[0] = list2[0];
-        list1[1] = list2[1];
-        list2[0] = list2[1] = NULL;
+    if (!list1[HEAD]) {
+        list1[HEAD] = list2[HEAD];
+        list1[TAIL] = list2[TAIL];
+        list2[HEAD] = list2[TAIL] = NULL;
         return;
     }
-    list1[1] -> next = list2[0];
-    list2[0] -> prev = list1[1];
-    list1[1] = list2[1];
-    list2[0] = list2[1] = NULL;
+    list1[TAIL] -> next = list2[HEAD];
+    list2[HEAD] -> prev = list1[TAIL];
+    list1[TAIL] = list2[TAIL];
+    list2[HEAD] = list2[TAIL] = NULL;
 }
 
 int main() {
@@ -74,7 +74,7 @@ int main() {
     int ch;
     scanf("%d", &ch);
     node** list1 = malloc(2*sizeof(*list1)), ** list2 = malloc(2*sizeof(*list2));
-    list1[0] = list1[1] = list2[0] = list2[1] = NULL;
+    list1[HEAD] = list1[TAIL] = list2[HEAD] = list2[TAIL] = NULL;
     while (1) {
         int ele;
         switch(ch) {
@@ -91,8 +91,8 @@ int main() {
             case 3:
                 concatenate(list1, list2);
                 break;
-            case 4: traverse(list1[0]); break;
-            case 5: traverse(list2[0]); break;
+            case 4: traverse(list1[HEAD]); break;
+            case 5: traverse(list2[HEAD]); break;
             case 6: return 0;
             default: printf("Invalid choice\n");
         }
