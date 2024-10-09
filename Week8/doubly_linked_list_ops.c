@@ -98,7 +98,7 @@ int delete_pos(int pos) {
     if (cur -> prev)
         cur -> prev -> next = cur -> next;
     if (cur -> next)
-        cur -> next -> prev = cur -> prev;
+        cur -> next -> prev = cur -> next;
     if (pos == 1)
         head = head -> next;
     if (pos == len)
