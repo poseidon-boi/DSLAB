@@ -103,8 +103,8 @@ term* add_poly(term* poly1, term* poly2) {
         cur1 = cur1 -> next;
         cur2 = cur2 -> next;
     }
-    if (!cur1)
-        cur1 = cur2;
+    if (!cur2)
+        cur2 = cur1;
     while (cur2) {
         term* temp = malloc(sizeof(*temp));
         temp -> coeff = cur2 -> coeff;
