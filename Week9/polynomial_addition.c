@@ -47,6 +47,8 @@ void print_poly(term* poly_head) {
     for (; cur; cur = cur -> next) {
         if (cur -> coeff > 0)
             printf(" +%gx^", cur -> coeff);
+        else if (cur -> coeff == 0)
+            continue;
         else
             printf(" -%gx^", (-cur -> coeff));
         printf("%d", cur -> exp);
