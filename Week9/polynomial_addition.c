@@ -17,8 +17,7 @@ term* get_polynomial() {
     int terms;
     scanf("%d", &terms);
     term* prev, *poly_head;
-    for (int i = 1; i <= terms; i++)
-    {
+    for (int i = 1; i <= terms; i++) {
         double co;
         int ex;
         printf("Enter coefficient %d: ", i);
