@@ -4,7 +4,7 @@
 /** A node storing a term in the polynomial */
 typedef struct term {
     /** The coefficient of the term */
-    int coeff;
+    double coeff;
     /** The exponent of the term */
     int exp;
     /** Pointer to the next term */
@@ -19,9 +19,10 @@ term* get_polynomial() {
     term* prev, *poly_head;
     for (int i = 1; i <= terms; i++)
     {
-        int co, ex;
+        double co;
+        int ex;
         printf("Enter coefficient %d: ", i);
-        scanf("%d", &co);
+        scanf("%lf", &co);
         printf("Enter exponent %d: ", i);
         scanf("%d", &ex);
         term* temp = malloc(sizeof(*temp));
@@ -46,9 +47,9 @@ void print_poly(term* poly_head) {
     term* cur = poly_head;
     for (; cur; cur = cur -> next) {
         if (cur -> coeff > 0)
-            printf(" +%dx^", cur -> coeff);
+            printf(" +%gx^", cur -> coeff);
         else
-            printf(" -%dx^", (-cur -> coeff));
+            printf(" -%gx^", (-cur -> coeff));
         printf("%d", cur -> exp);
     }
     printf("\n");
