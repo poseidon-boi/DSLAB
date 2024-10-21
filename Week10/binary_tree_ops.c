@@ -56,14 +56,14 @@ int print_parent(node* root, int ele) {
     if (root)
         if (root -> data == ele)
             return 1;
-    int found = 0;
+    int found1 = 0, found2 = 0;
     if (root -> left) {
         if (root -> left -> data == ele) {
             printf("%d ", root -> data);
             return 1;
         }
         else
-            found = print_parent(root -> left, ele);
+            found1 = print_parent(root -> left, ele);
     }
     if (root -> right) {
         if (root -> right -> data == ele) {
@@ -71,9 +71,9 @@ int print_parent(node* root, int ele) {
             return 1;
         }
         else
-            found = print_parent(root -> right, ele);
+            found2 = print_parent(root -> right, ele);
     }
-    return found;
+    return found1 || found2;
 }
 
 /** Returns the depth of the binary tree
@@ -102,31 +102,20 @@ int print_ancestors(node* root, int ele) {
         if (root -> data == ele)
             return 1;
     if (root -> left) {
-        if (root -> left -> data == ele) {
+        int found = print_ancestors(root -> left, ele);
+        if (found) {
             printf("%d ", root -> data);
             return 1;
-        }
-        else {
-            int found = print_ancestors(root -> left, ele);
-            if (found) {
-                printf("%d ", root -> data);
-                return 1;
-            }
         }
     }
     if (root -> right) {
-        if (root -> right -> data == ele) {
+        int found = print_ancestors(root -> right, ele);
+        if (found) {
             printf("%d ", root -> data);
             return 1;
         }
-        else {
-            int found = print_ancestors(root -> right, ele);
-            if (found) {
-                printf("%d ", root -> data);
-                return 1;
-            }
-        }
     }
+    return 0;
 }
 
 /** Returns the number of leaf nodes in the binary tree
@@ -249,5 +238,4 @@ int main() {
         printf("Enter choice: ");
         scanf("%d", &ch);
     }
-    return 0;
 }
