@@ -32,7 +32,7 @@ node* insert(node* root, int ele) {
     return root;
 }
 
-int max(node* root) {
+static int max(node* root) {
     for (; root -> right; root = root -> right);
     return root -> data;
 }
@@ -52,7 +52,7 @@ node* delete(node* root, int ele, int* found) {
         root -> left = delete(root -> left, ele, found);
         return root;
     }
-    else if (ele > root -> data) {
+    if (ele > root -> data) {
         root -> right = delete(root -> right, ele, found);
         return root;
     }
@@ -141,5 +141,4 @@ int main() {
         printf("Enter choice: ");
         scanf(" %c", &ch);
     }
-    return 0;
 }
