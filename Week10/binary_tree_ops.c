@@ -187,14 +187,21 @@ int main() {
            "6. Print parent\n7. Print depth\n8. Print ancestors\n"
            "9. Count leaf nodes\n10. Exit\nEnter choice: ");
     int ch;
-    scanf("%d", &ch);
+    if (!scanf("%d", &ch)) {
+        while (getchar() != '\n');
+        ch = 11;
+    }
     node* root = NULL;
     while (1) {
-        int ele, found = 1;
+        int ele, found = 1, error = 0;
         switch (ch) {
         case 1:
             printf("Enter element to insert: ");
-            scanf("%d", &ele);
+            if (!scanf("%d", &ele)) {
+                while (getchar() != '\n');
+                error = 1;
+                break;
+            }
             root = insert(root, ele);
             break;
         case 2: print_tree(root, 0); break;
@@ -212,7 +219,11 @@ int main() {
             break;
         case 6:
             printf("Enter element: ");
-            scanf("%d", &ele);
+            if (!scanf("%d", &ele)) {
+                while (getchar() != '\n');
+                error = 1;
+                break;
+            }
             found = print_parent(root, ele);
             if (found)
                 printf("\n");
@@ -222,7 +233,11 @@ int main() {
             break;
         case 8:
             printf("Enter element: ");
-            scanf("%d", &ele);
+            if (!scanf("%d", &ele)) {
+                while (getchar() != '\n');
+                error = 1;
+                break;
+            }
             found = print_ancestors(root, ele);
             if (found)
                 printf("\n");
@@ -235,7 +250,12 @@ int main() {
         }
         if (!found)
             printf("Element not found\n");
+        if (error)
+            printf("Operation failed\n");
         printf("Enter choice: ");
-        scanf("%d", &ch);
+        if (!scanf("%d", &ch)) {
+            while (getchar() != '\n');
+            ch = 11;
+        }
     }
 }
