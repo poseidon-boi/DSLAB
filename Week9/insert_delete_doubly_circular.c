@@ -80,23 +80,31 @@ void traverse() {
 int main() {
     printf("1. Insert at tail\n2. Delete entered element\n"
            "3. Traverse\n4. Exit\nEnter choice: ");
-    int ch;
-    scanf("%d", &ch);
+    char ch;
+    scanf(" %c", &ch);
     while (1) {
         int ele, error = 0;
         switch(ch) {
-            case 1:
+            case '1':
                 printf("Enter element to insert: ");
-                scanf("%d", &ele);
+                if (!scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    printf("Not a number\n");
+                    break;
+                }
                 insert_ele(ele);
                 break;
-            case 2:
+            case '2':
                 printf("Enter element to delete: ");
-                scanf("%d", &ele);
+                if (!scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    printf("Not a number\n");
+                    break;
+                }
                 error = delete_ele(ele);
                 break;
-            case 3: traverse(); break;
-            case 4: return 0;
+            case '3': traverse(); break;
+            case '4': return 0;
             default: printf("Invalid choice\n");
         }
         if (error)
