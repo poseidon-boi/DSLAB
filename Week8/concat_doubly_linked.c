@@ -71,32 +71,42 @@ int main() {
     printf("1. Insert into list 1\n2. Insert into list 2\n"
            "3. Concat into list 1\n4. Traverse list 1\n"
            "5. Traverse list 2\n6. Exit\nEnter choice: ");
-    int ch;
-    scanf("%d", &ch);
+    char ch;
+    scanf(" %c", &ch);
     node** list1 = malloc(2*sizeof(*list1)), ** list2 = malloc(2*sizeof(*list2));
     list1[HEAD] = list1[TAIL] = list2[HEAD] = list2[TAIL] = NULL;
     while (1) {
-        int ele;
+        int ele, error = 0;
         switch(ch) {
-            case 1:
+            case '1':
                 printf("Enter element to insert: ");
-                scanf("%d", &ele);
+                if (!scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 insert_tail(list1, ele);
                 break;
-            case 2:
+            case '2':
                 printf("Enter element to insert: ");
-                scanf("%d", &ele);
+                if (!scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 insert_tail(list2, ele);
                 break;
-            case 3:
+            case '3':
                 concatenate(list1, list2);
                 break;
-            case 4: traverse(list1[HEAD]); break;
-            case 5: traverse(list2[HEAD]); break;
-            case 6: return 0;
+            case '4': traverse(list1[HEAD]); break;
+            case '5': traverse(list2[HEAD]); break;
+            case '6': return 0;
             default: printf("Invalid choice\n");
         }
+        if (error)
+            printf("Not a number\n");
         printf("Enter choice: ");
-        scanf("%d", &ch);
+        scanf(" %c", &ch);
     }
 }

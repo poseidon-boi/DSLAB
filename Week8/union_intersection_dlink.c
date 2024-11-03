@@ -194,31 +194,41 @@ int main() {
            "3. Traverse list 1\n4. Traverse list 2\n"
            "5. Print union\n6. Print intersection\n"
            "7. Exit\nEnter choice: ");
-    int ch;
-    scanf("%d", &ch);
-    node** list1 = malloc(2*sizeof(*list1)), ** list2 = malloc(2*sizeof(*list2));
+    char ch;
+    scanf(" %c", &ch);
+    node** list1 = malloc(2*sizeof(*list1)), **list2 = malloc(2*sizeof(*list2));
     list1[0] = list1[1] = list2[0] = list2[1] = NULL;
     while (1) {
-        int ele;
+        int ele, error = 0;
         switch(ch) {
-            case 1:
+            case '1':
                 printf("Enter element to insert: ");
-                scanf("%d", &ele);
+                if (!scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 insert_sort(list1, ele);
                 break;
-            case 2:
+            case '2':
                 printf("Enter element to insert: ");
-                scanf("%d", &ele);
+                if (!scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 insert_sort(list2, ele);
                 break;
-            case 3: traverse(list1[0]); break;
-            case 4: traverse(list2[0]); break;
-            case 5: print_union(list1, list2); break;
-            case 6: print_intersection(list1, list2); break;
-            case 7: return 0;
+            case '3': traverse(list1[0]); break;
+            case '4': traverse(list2[0]); break;
+            case '5': print_union(list1, list2); break;
+            case '6': print_intersection(list1, list2); break;
+            case '7': return 0;
             default: printf("Invalid choice\n");
         }
+        if (error)
+            printf("Not a number\n");
         printf("Enter choice: ");
-        scanf("%d", &ch);
+        scanf(" %c", &ch);
     }
 }

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 /** Node of the doubly linked list
  * @param data
@@ -26,7 +25,7 @@ static int len;
  * @param ele The element to insert
  */
 void insert_tail(int ele) {
-    node* insert = malloc(sizeof(*insert));
+    node* insert = (node*) malloc(sizeof(*insert));
     insert -> data = ele;
     insert -> next = NULL;
     if(!head) {
@@ -73,7 +72,7 @@ int insert_pos(int ele, int pos) {
     }
     node* cur = head;
     for (int i = 1; i < pos; i++, cur = cur -> next);
-    node* insert = malloc(sizeof(*insert));
+    node* insert = (node*) malloc(sizeof(*insert));
     insert -> data = ele;
     if (pos == 1)
         head = insert;
@@ -122,7 +121,7 @@ int insert_after(int ele, int ins) {
             break;
     if (!cur)
         return 1;
-    node *insert = malloc(sizeof(*insert));
+    node* insert = (node*) malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> next = cur -> next;
     if (insert -> next)
@@ -149,7 +148,7 @@ int insert_before(int ele, int ins) {
             break;
     if (!cur)
         return 1;
-    node *insert = malloc(sizeof(*insert));
+    node* insert = (node*) malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> prev = cur -> prev;
     if (insert -> prev)
@@ -188,45 +187,65 @@ int main() {
            "3. Insert at given position\n4. Delete from given position\n"
            "5. Insert after given element\n6. Insert before given element\n"
            "7. Traverse\n8. Reverse\n9. Exit\nEnter choice: ");
-    int ch;
-    scanf("%d", &ch);
+    char ch;
+    scanf(" %c", &ch);
     while (1) {
         int ele, ins, error = 0, pos;
         switch(ch) {
-            case 1:
+            case '1':
                 printf("Enter element to insert: ");
-                scanf("%d", &ins);
+                if (!scanf("%d", &ins)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 insert_tail(ins);
                 break;
-            case 2: error = delete_tail(); break;
-            case 3:
+            case '2': error = delete_tail(); break;
+            case '3':
                 printf("Enter position and element to insert: ");
-                scanf("%d %d", &pos, &ele);
+                if (!scanf("%d", &pos) || !scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 error = insert_pos(ele, pos);
                 break;
-            case 4:
+            case '4':
                 printf("Enter position to delete from: ");
-                scanf("%d", &pos);
+                if (!scanf("%d", &pos)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 error = delete_pos(pos);
                 break;
-            case 5:
+            case '5':
                 printf("Enter existing and insert element: ");
-                scanf("%d %d", &ele, &ins);
+                if (!scanf("%d", &ele) || !scanf("%d", &ins)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 error = insert_after(ele, ins);
                 break;
-            case 6:
+            case '6':
                 printf("Enter existing and insert element: ");
-                scanf("%d %d", &ele, &ins);
+                if (!scanf("%d", &ele) || !scanf("%d", &ins)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 error = insert_before(ele, ins);
                 break;
-            case 7: traverse(); break;
-            case 8: reverse(); break;
-            case 9: return 0;
+            case '7': traverse(); break;
+            case '8': reverse(); break;
+            case '9': return 0;
             default: printf("Invalid choice\n");
         }
         if (error)
             printf("Operation failed\n");
         printf("Enter choice: ");
-        scanf("%d", &ch);
+        scanf(" %c", &ch);
     }
 }
