@@ -26,7 +26,7 @@ int insert_before(int ele, int ins) {
     if (!head)
         return 1;
     if (head -> data == ele) {
-        node* insert = malloc(sizeof(*insert));
+        node* insert = (node*) malloc(sizeof(*insert));
         insert -> data = ins;
         insert -> next = head;
         head = insert;
@@ -39,7 +39,7 @@ int insert_before(int ele, int ins) {
             break;
     if (!cur -> next)
         return 1;
-    node *insert = malloc(sizeof(*insert));
+    node* insert = (node*) malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -61,7 +61,7 @@ int insert_after(int ele, int ins) {
             break;
     if (!cur)
         return 1;
-    node *insert = malloc(sizeof(*insert));
+    node* insert = (node*) malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -76,7 +76,9 @@ int delete(int ele) {
     if (!head)
         return 1;
     if (head -> data == ele) {
+        node* deleted = head;
         head = head -> next;
+        free(deleted);
         return 0;
     }
     node* cur = head;
@@ -140,18 +142,19 @@ void delete_alternate() {
     }
 }
 
-/** Inserts an element in sorted order, works as intended only if list is already sorted in ascending order
+/** Inserts an element in sorted order,
+ *  works as intended only if list is already sorted in ascending order
  * @param ele The element to insert
  */
 void insert_sort(int ele) {
     if (!head) {
-        head = malloc(sizeof(*head));
+        head = (node*) malloc(sizeof(*head));
         head -> next = NULL;
         head -> data = ele;
         len++;
         return;
     }
-    node* insert = malloc(sizeof(*insert));
+    node* insert = (node*) malloc(sizeof(*insert));
     insert -> data = ele;
     node* cur = head;
     for (; cur -> next; cur = cur -> next)
@@ -198,7 +201,11 @@ int main() {
                 break;
             case '3':
                 printf("Enter element to delete: ");
-                scanf("%d", &ele);
+                if (!scanf("%d", &ele)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 error = delete(ele);
                 break;
             case '4': traverse(); break;
