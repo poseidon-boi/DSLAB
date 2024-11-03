@@ -109,23 +109,35 @@ int main() {
     scanf(" %c", &ch);
     node* root = NULL;
     while (1) {
-        int ele, found = 1;
+        int ele, found = 1, error = 0;
         switch (ch) {
         case '1':
             printf("Enter element to insert: ");
-            scanf("%d", &ele);
+            if (!scanf("%d", &ele)) {
+                while (getchar() != '\n');
+                error = 1;
+                break;
+            }
             root = insert(root, ele);
             break;
         case '2':
             printf("Enter element to delete: ");
-            scanf("%d", &ele);
+            if (!scanf("%d", &ele)) {
+                while (getchar() != '\n');
+                error = 1;
+                break;
+            }
             delete(root, ele, &found);
             if (!found)
                 printf("Element not found\n");
             break;
         case '3':
             printf("Enter element to search: ");
-            scanf("%d", &ele);
+            if (!scanf("%d", &ele)) {
+                while (getchar() != '\n');
+                error = 1;
+                break;
+            }
             if (search(root, ele))
                 printf("Element found\n");
             else
@@ -138,6 +150,8 @@ int main() {
         case '5': return 0;
         default: printf("Invalid choice\n");
         }
+        if (error)
+            printf("Operation failed\n");
         printf("Enter choice: ");
         scanf(" %c", &ch);
     }
