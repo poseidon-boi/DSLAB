@@ -39,7 +39,7 @@ int insert_before(int ele, int ins) {
             break;
     if (!cur -> next)
         return 1;
-    node* insert = malloc(sizeof(*insert));
+    node *insert = malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -61,7 +61,7 @@ int insert_after(int ele, int ins) {
             break;
     if (!cur)
         return 1;
-    node* insert = malloc(sizeof(*insert));
+    node *insert = malloc(sizeof(*insert));
     insert -> data = ins;
     insert -> next = cur -> next;
     cur -> next = insert;
@@ -76,14 +76,12 @@ int delete(int ele) {
     if (!head)
         return 1;
     if (head -> data == ele) {
-        node* deleted = head;
         head = head -> next;
-        free(deleted);
         return 0;
     }
     node* cur = head;
     for (; cur -> next; cur = cur -> next)
-        if (cur -> next -> data == ele)
+        if (cur -> next -> data == ele || !cur)
             break;
     if (!cur -> next)
         return 1;
@@ -175,41 +173,53 @@ int main() {
            "3. Delete\n4. Traverse\n5. Reverse\n6. Sort\n"
            "7. Delete alternate\n8. Insert in sorted\n"
            "9. Exit\nEnter choice: ");
-    int ch;
-    scanf("%d", &ch);
+    char ch;
+    scanf(" %c", &ch);
     while (1) {
         int ele, ins, error = 0;
         switch(ch) {
-            case 1:
+            case '1':
                 printf("Enter existing and insert element: ");
-                scanf("%d %d", &ele, &ins);
+                if (!scanf("%d", &ele) || !scanf("%d", &ins)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 error = insert_before(ele, ins);
                 break;
-            case 2:
+            case '2':
                 printf("Enter existing and insert element: ");
-                scanf("%d %d", &ele, &ins);
+                if (!scanf("%d", &ele) || !scanf("%d", &ins)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 error = insert_after(ele, ins);
                 break;
-            case 3:
+            case '3':
                 printf("Enter element to delete: ");
                 scanf("%d", &ele);
                 error = delete(ele);
                 break;
-            case 4: traverse(); break;
-            case 5: reverse(); break;
-            case 6: sort(); break;
-            case 7: delete_alternate(); break;
-            case 8:
+            case '4': traverse(); break;
+            case '5': reverse(); break;
+            case '6': sort(); break;
+            case '7': delete_alternate(); break;
+            case '8':
                 printf("Enter element to insert: ");
-                scanf("%d", &ins);
+                if (!scanf("%d", &ins)) {
+                    while (getchar() != '\n');
+                    error = 1;
+                    break;
+                }
                 insert_sort(ins);
                 break;
-            case 9: return 0;
+            case '9': return 0;
             default: printf("Invalid choice\n");
         }
         if (error)
             printf("Operation failed\n");
         printf("Enter choice: ");
-        scanf("%d", &ch);
+        scanf(" %c", &ch);
     }
 }
