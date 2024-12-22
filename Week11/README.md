@@ -17,5 +17,5 @@ A menu driven program to perform the following binary search tree operations:
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 -o output_file_name.out bst_ops.c
+gcc -O3 -o output_file_name.out bst_ops.c
 ```

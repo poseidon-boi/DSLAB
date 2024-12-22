@@ -18,7 +18,7 @@ A menu driven program to perform the following basic operations on a binary tree
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 -o output_file_name.out binary_tree_ops.c
+gcc -O3 -o output_file_name.out binary_tree_ops.c
 ```
 
 ## binary_tree_ops.o
@@ -41,7 +41,7 @@ A menu driven program to perform the following operations on a binary tree:
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 -o output_file_name.out level_order.c binary_tree_ops.o
+gcc -O3 -o output_file_name.out level_order.c binary_tree_ops.o
 ```
 
 ## postfix_tree.c
@@ -63,7 +63,7 @@ Result is -8
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 -o output_file_name.out postfix_tree.c binary_tree_ops.o
+gcc -O3 -o output_file_name.out postfix_tree.c binary_tree_ops.o
 ```
 
 ## tree_copy.c
@@ -79,7 +79,7 @@ A menu driven program that copies a given binary tree to a brand new binary tree
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 -o output_file_name.out tree_copy.c binary_tree_ops.o
+gcc -O3 -o output_file_name.out tree_copy.c binary_tree_ops.o
 ```
 
 ## tree_equality.c
@@ -96,7 +96,7 @@ A menu driven program that compares two binary trees to check if they are equal.
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 -o output_file_name.out tree_equality.c binary_tree_ops.o
+gcc -O3 -o output_file_name.out tree_equality.c binary_tree_ops.o
 ```
 
 ## tree_mirror.c
@@ -113,5 +113,5 @@ A menu driven program that checks whether two binary trees are mirrors of each o
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 -o output_file_name.out tree_mirror.c binary_tree_ops.o
+gcc -O3 -o output_file_name.out tree_mirror.c binary_tree_ops.o
 ```
