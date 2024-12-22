@@ -1,8 +1,10 @@
 # Week 11
 
+The programs this week focused on binary search trees (BST). I combined all the programs into one for ease of use.
+
 ## bst_ops.c
 
-A program that performs the following binary tree operations:
+A program that performs the following binary search tree operations:
 
 ```
 1. Insert element
@@ -15,5 +17,5 @@ A program that performs the following binary tree operations:
 Build command for linux(with GCC):
 
 ```shell
-$ gcc -O3 bst_ops.c
+$ gcc -O3 -o output_file_name.out bst_ops.c
 ```
