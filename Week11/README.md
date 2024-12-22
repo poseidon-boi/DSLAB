@@ -4,7 +4,7 @@ The programs this week focused on binary search trees (BST). I combined all the 
 
 ## bst_ops.c
 
-A program that performs the following binary search tree operations:
+A menu driven program to perform the following binary search tree operations:
 
 ```
 1. Insert element
