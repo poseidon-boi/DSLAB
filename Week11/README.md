@@ -5,5 +5,5 @@
 Build command for linux(with GCC):
 
 ```shell
-gcc -O3 bst_ops.c
+$ gcc -O3 bst_ops.c
 ```
