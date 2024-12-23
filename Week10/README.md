@@ -51,7 +51,6 @@ A program that creates an expression tree from a postfix expression and evaluate
 Output example:
 
 ```
-
 Enter postfix expression: 576+-
                 6
         +
@@ -59,7 +58,6 @@ Enter postfix expression: 576+-
 -
         5
 Result is -8
-
 ```
 
 Build command for linux(with GCC):
