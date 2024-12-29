@@ -24,6 +24,10 @@ term* get_polynomial() {
         scanf("%lf", &co);
         printf("Enter exponent %d: ", i);
         scanf("%d", &ex);
+        if (co == 0) {
+            i--;
+            continue;
+        }
         term* temp = malloc(sizeof(*temp));
         temp -> coeff = co;
         temp -> exp = ex;
@@ -95,6 +99,7 @@ term* add_poly(term* poly1, term* poly2) {
             free(temp);
             cur1 = cur1 -> next;
             cur2 = cur2 -> next;
+            i--;
             continue;
         }
         temp -> exp = cur1 -> exp;
